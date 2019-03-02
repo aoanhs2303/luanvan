@@ -33,9 +33,9 @@ class ItemChain:
 
 
 class LargeItemChain:
-    def __init__(self, List_Of_ChainIDs, Intersection_Count, Support):
+    def __init__(self, List_Of_ChainIDs, LOE, Support):
         self.List_Of_ChainIDs = List_Of_ChainIDs
-        self.Intersection_Count = Intersection_Count
+        self.LOE = LOE
         self.Support = Support
 
 

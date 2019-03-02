@@ -31,8 +31,9 @@ def MRAR():
     EI16 = DS.EntityInfo("Ahmad", [DS.RelationAndEntities("Knows", ["Ali"])])
     EI17 = DS.EntityInfo("Isfahan", [DS.RelationAndEntities("Live in", ["Ali", "Ahmad", "Nematbakhsh"])])
     EI18 = DS.EntityInfo("MIT", [DS.RelationAndEntities("Patronage", ["Project A", "Project B"])])
+    EI19 = DS.EntityInfo("Mr B", [DS.RelationAndEntities("Cooperator", ["Nematbakhsh"])])
 
-    List_EntityInfo = [EI01, EI02, EI03, EI04, EI05, EI06, EI07, EI08, EI09, EI10, EI11, EI12, EI13, EI14, EI15, EI16, EI17, EI18]
+    List_EntityInfo = [EI01, EI02, EI03, EI04, EI05, EI06, EI07, EI08, EI09, EI10, EI11, EI12, EI13, EI14, EI15, EI16, EI17, EI18, EI19]
 
     global LLICs
     LLICs = []
@@ -43,25 +44,30 @@ def MRAR():
             e = Relation.relation.get(r)
             GIC.GenerateItemChains(EntityInfo.endPointEntity, r, e, 1, LLICs, List_EntityInfo)
 
+    # LLICs = [LLICs[14], LLICs[22], LLICs[30]]
+
+    ItemChains = LLICs.copy()
+
     AllLICs = LLICs = G2LIC.Generate2LargeItemChains(LLICs)
 
-    L = 1
+    L = 0
     while L < len(LLICs):  # until len(Candidates) == 0
         L = L + 1
-        Candidates = []
-        for LIC1 in LLICs:
-            for LIC2 in LLICs:
-                if LIC1 != LIC2 and LIC1.List_Of_ChainIDs[:L - 1] == LIC2.List_Of_ChainIDs[:L - 1]:
-                    Candidates.append(Helper.CombineAndSort(LIC1.List_Of_ChainIDs[:L], LIC2.List_Of_ChainIDs[L-1:L]))
+        Candidates = list()
+        lengthOfArray = len(LLICs)
+        for i in range(lengthOfArray):
+            for j in range(i + 1, lengthOfArray - 1):
+                if LLICs[i].List_Of_ChainIDs[:L] == LLICs[j].List_Of_ChainIDs[:L]:
+                    Candidates.append(Helper.CombineAndSort(LLICs[i], LLICs[j], L))
 
-        LLICs = []
+        LLICs = list()
         for CIS in Candidates:
-            if len(CIS) / Config.TOTAL_VERTICES >= Config.MIN_SUPPORT:  # all subset of CIS are Large
-                LLICs = LLICs + CIS
+            if len(CIS.LOE) / Config.TOTAL_VERTICES >= Config.MIN_SUPPORT:  # all subset of CIS are Large
+                LLICs.append(CIS)
 
         AllLICs = AllLICs + LLICs
 
-    Rules = GR.GenerateRule(AllLICs)
+    Rules = GR.GenerateRule(AllLICs, ItemChains)
     return Rules
 
 
