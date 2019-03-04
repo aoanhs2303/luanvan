@@ -26,11 +26,10 @@ class EntityInfo:
 class ItemChain:
     def __init__(self, ChainId, Entities_Var, Relations_Parameter, EndpointEntity, Support):
         self.ChainId = ChainId
-        self.Entities_Var = Entities_Var
+        self.Entities_Var = set(Entities_Var)
         self.Relations_Parameter = Relations_Parameter
         self.EndpointEntity = EndpointEntity
         self.Support = Support
-
 
 class LargeItemChain:
     def __init__(self, List_Of_ChainIDs, LOE, Support):

@@ -13,22 +13,19 @@ def MRAR():
     EI02 = DS.EntityInfo("Tehran", [DS.RelationAndEntities("Nearby", ["Yazd"])])
     EI03 = DS.EntityInfo("Shiraz", [DS.RelationAndEntities("Nearby", ["Kerman"])])
     EI04 = DS.EntityInfo("Yazd", [DS.RelationAndEntities("Live in", ["Hasan"])])
-    EI05 = DS.EntityInfo("Kerman", [DS.RelationAndEntities("Live in", ["Reza"]),
-                                    DS.RelationAndEntities("Live in", ["Saraee"])])
-    EI06 = DS.EntityInfo("Hasan", [DS.RelationAndEntities("Knows", ["Reza"])])
+    EI05 = DS.EntityInfo("Kerman", [DS.RelationAndEntities("Live in", ["Reza"]),DS.RelationAndEntities("Live in", ["Saraee"])])
+    EI06 = DS.EntityInfo("Hasan", [])
     EI07 = DS.EntityInfo("Reza", [])
     EI08 = DS.EntityInfo("Good", [DS.RelationAndEntities("Health Condition", ["Hasan", "Reza"])])
     EI09 = DS.EntityInfo("Project A", [DS.RelationAndEntities("Work On", ["Mr A"])])
-    EI10 = DS.EntityInfo("Mr A", [DS.RelationAndEntities("Cooperator", ["Saraee"]),
-                                  DS.RelationAndEntities("Knows", ["Nematbakhsh"])])
+    EI10 = DS.EntityInfo("Mr A", [DS.RelationAndEntities("Cooperator", ["Saraee"])])
     EI11 = DS.EntityInfo("Saraee", [DS.RelationAndEntities("Supervised By", ["Reza", "Ali"])])
     EI12 = DS.EntityInfo("Ali", [])
     EI13 = DS.EntityInfo("IUT", [DS.RelationAndEntities("Study in", ["Reza", "Ali", "Ahmad"]),
                                  DS.RelationAndEntities("Patronage", ["Project B"])])
     EI14 = DS.EntityInfo("Project B", [DS.RelationAndEntities("Work On", ["Mr B"])])
-    EI15 = DS.EntityInfo("Nematbakhsh", [DS.RelationAndEntities("Knows", ["Mr B", "Saraee"]),
-                                         DS.RelationAndEntities("Supervised By", ["Ahmad"])])
-    EI16 = DS.EntityInfo("Ahmad", [DS.RelationAndEntities("Knows", ["Ali"])])
+    EI15 = DS.EntityInfo("Nematbakhsh", [DS.RelationAndEntities("Supervised By", ["Ahmad"])])
+    EI16 = DS.EntityInfo("Ahmad", [])
     EI17 = DS.EntityInfo("Isfahan", [DS.RelationAndEntities("Live in", ["Ali", "Ahmad", "Nematbakhsh"])])
     EI18 = DS.EntityInfo("MIT", [DS.RelationAndEntities("Patronage", ["Project A", "Project B"])])
     EI19 = DS.EntityInfo("Mr B", [DS.RelationAndEntities("Cooperator", ["Nematbakhsh"])])
@@ -42,16 +39,21 @@ def MRAR():
         for Relation in EntityInfo.listRelationsAndEntities:
             r = list(Relation.relation.keys())[0]
             e = Relation.relation.get(r)
+            print(r, e)
             GIC.GenerateItemChains(EntityInfo.endPointEntity, r, e, 1, LLICs, List_EntityInfo)
 
     # LLICs = [LLICs[14], LLICs[22], LLICs[30]]
 
     ItemChains = LLICs.copy()
 
+    for I in ItemChains:
+        print(I.ChainId, I.Entities_Var, I.Relations_Parameter, I.EndpointEntity, I.Support)
+
     AllLICs = LLICs = G2LIC.Generate2LargeItemChains(LLICs)
 
     L = 0
     while L < len(LLICs):  # until len(Candidates) == 0
+        print(L)
         L = L + 1
         Candidates = list()
         lengthOfArray = len(LLICs)
@@ -59,17 +61,18 @@ def MRAR():
             for j in range(i + 1, lengthOfArray - 1):
                 if LLICs[i].List_Of_ChainIDs[:L] == LLICs[j].List_Of_ChainIDs[:L]:
                     Candidates.append(Helper.CombineAndSort(LLICs[i], LLICs[j], L))
-
         LLICs = list()
         for CIS in Candidates:
             if len(CIS.LOE) / Config.TOTAL_VERTICES >= Config.MIN_SUPPORT:  # all subset of CIS are Large
                 LLICs.append(CIS)
-
         AllLICs = AllLICs + LLICs
-
+        print(L, len(Candidates))
+        print(len(AllLICs))
+    print('done generate large')
     Rules = GR.GenerateRule(AllLICs, ItemChains)
     return Rules
 
 
 if __name__ == '__main__':
     MRAR()
+    print('done')

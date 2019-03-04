@@ -18,10 +18,10 @@
 #
 
 
-# d = {'a': ['apple1', 'apple2']}
+d = {[1, 2]: ['apple1', 'apple2']}
 # d['a'] = d['a'] + ['apple3']
 # print(d['a'])
-# print(d)
+print(d)
 # print(list(d.keys())[0])  # displays all keys in list
 # print(d.values())  # displays you values in list
 # print(d.items())  # displays you pair tuple of key and value
@@ -70,19 +70,19 @@
 #     print(i)
 
 
-Result = [{'Supervised By': []}, {'Knows': []}]
-Relations_Var = [[{'Supervised By': ['Reza', 'Ali']}],[{'Knows': ['Mr B', 'Saraee']}, {'Supervised By': ['Ahmad']}]]
-
-# print(Result[1]['Knows'])
-
-for r1 in Result:
-    for r2 in Relations_Var:
-        for key in r2:
-            try:
-                k = list(key.keys())[0]
-                r1[k] = r1[k] + key.get(k)
-            except:
-                pass
-
-
-print(Result)
+# Result = [{'Supervised By': []}, {'Knows': []}]
+# Relations_Var = [[{'Supervised By': ['Reza', 'Ali']}],[{'Knows': ['Mr B', 'Saraee']}, {'Supervised By': ['Ahmad']}]]
+#
+# # print(Result[1]['Knows'])
+#
+# for r1 in Result:
+#     for r2 in Relations_Var:
+#         for key in r2:
+#             try:
+#                 k = list(key.keys())[0]
+#                 r1[k] = r1[k] + key.get(k)
+#             except:
+#                 pass
+#
+#
+# print(Result)
