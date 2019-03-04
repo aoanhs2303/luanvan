@@ -29,7 +29,7 @@ def UnionIncomingEdgesOf(Entities_Var, List_EntityInfo):
     Relations = set()
     Result = []
     for r in Relations_Var:
-        Relations.add(list(r[0].relation.keys())[0])
+        Relations.add(list(r[0].keys())[0])
 
     for r in Relations:
         Result.append({r: list()})
@@ -38,11 +38,9 @@ def UnionIncomingEdgesOf(Entities_Var, List_EntityInfo):
         for r2 in Relations_Var:
             for key in r2:
                 try:
-                    k = list(key.relation.keys())[0]
-                    r1[k] = r1[k] + key.relation.get(k)
+                    k = list(key.keys())[0]
+                    r1[k] = r1[k] + key.get(k)
                 except:
                     pass
-            # k = list(r2[0].relation.keys())[0]
-            # r1[list(r2[0].relation.keys())[0]] = r1[k] + r2[0].relation.get(k)
 
     return Result

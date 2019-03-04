@@ -9,47 +9,48 @@ import Helper
 # Config.setNumberOfVTOTAL_VERTICESertices(range(19))
 
 def MRAR():
-    EI01 = DS.EntityInfo("Humid", [DS.RelationAndEntities("Climate Type", ["Tehran", "Shiraz"])])
-    EI02 = DS.EntityInfo("Tehran", [DS.RelationAndEntities("Nearby", ["Yazd"])])
-    EI03 = DS.EntityInfo("Shiraz", [DS.RelationAndEntities("Nearby", ["Kerman"])])
-    EI04 = DS.EntityInfo("Yazd", [DS.RelationAndEntities("Live in", ["Hasan"])])
-    EI05 = DS.EntityInfo("Kerman", [DS.RelationAndEntities("Live in", ["Reza"]),DS.RelationAndEntities("Live in", ["Saraee"])])
+    EI01 = DS.EntityInfo("Humid", [{"Climate Type": ["Tehran", "Shiraz"]}])
+    EI02 = DS.EntityInfo("Tehran", [{"Nearby": ["Yazd"]}])
+    EI03 = DS.EntityInfo("Shiraz", [{"Nearby": ["Kerman"]}, {"Live in": ["Mr A"]}])
+    EI04 = DS.EntityInfo("Yazd", [{"Live in": ["Hasan"]}])
+    EI05 = DS.EntityInfo("Kerman", [{"Live in": ["Reza", "Saraee"]}])
     EI06 = DS.EntityInfo("Hasan", [])
     EI07 = DS.EntityInfo("Reza", [])
-    EI08 = DS.EntityInfo("Good", [DS.RelationAndEntities("Health Condition", ["Hasan", "Reza"])])
-    EI09 = DS.EntityInfo("Project A", [DS.RelationAndEntities("Work On", ["Mr A"])])
-    EI10 = DS.EntityInfo("Mr A", [DS.RelationAndEntities("Cooperator", ["Saraee"])])
-    EI11 = DS.EntityInfo("Saraee", [DS.RelationAndEntities("Supervised By", ["Reza", "Ali"])])
+    EI08 = DS.EntityInfo("Good", [{"Health Condition": ["Hasan", "Reza"]}])
+    EI09 = DS.EntityInfo("Project A", [{"Work On": ["Mr A"]}])
+    EI10 = DS.EntityInfo("Mr A", [{"Cooperator": ["Saraee"]}])
+    EI11 = DS.EntityInfo("Saraee", [{"Supervised By": ["Reza", "Ali"]}])
     EI12 = DS.EntityInfo("Ali", [])
-    EI13 = DS.EntityInfo("IUT", [DS.RelationAndEntities("Study in", ["Reza", "Ali", "Ahmad"]),
-                                 DS.RelationAndEntities("Patronage", ["Project B"])])
-    EI14 = DS.EntityInfo("Project B", [DS.RelationAndEntities("Work On", ["Mr B"])])
-    EI15 = DS.EntityInfo("Nematbakhsh", [DS.RelationAndEntities("Supervised By", ["Ahmad"])])
+    EI13 = DS.EntityInfo("IUT", [{"Study in": ["Reza", "Ali", "Ahmad"]}, {"Patronage": ["Project B"]}])
+    EI14 = DS.EntityInfo("Project B", [{"Work On": ["Mr B"]}])
+    EI15 = DS.EntityInfo("Nematbakhsh", [{"Supervised By": ["Ahmad"]}])
     EI16 = DS.EntityInfo("Ahmad", [])
-    EI17 = DS.EntityInfo("Isfahan", [DS.RelationAndEntities("Live in", ["Ali", "Ahmad", "Nematbakhsh"])])
-    EI18 = DS.EntityInfo("MIT", [DS.RelationAndEntities("Patronage", ["Project A", "Project B"])])
-    EI19 = DS.EntityInfo("Mr B", [DS.RelationAndEntities("Cooperator", ["Nematbakhsh"])])
+    EI17 = DS.EntityInfo("Isfahan", [{"Live in": ["Ali", "Ahmad", "Nematbakhsh"]}])
+    EI18 = DS.EntityInfo("MIT", [{"Patronage": ["Project A", "Project B"]}])
+    EI19 = DS.EntityInfo("Mr B", [{"Cooperator": ["Nematbakhsh"]}])
 
     List_EntityInfo = [EI01, EI02, EI03, EI04, EI05, EI06, EI07, EI08, EI09, EI10, EI11, EI12, EI13, EI14, EI15, EI16, EI17, EI18, EI19]
 
     global LLICs
     LLICs = []
-    AllLICs = []
+    AllCandidate = []
+
     for EntityInfo in List_EntityInfo:
         for Relation in EntityInfo.listRelationsAndEntities:
-            r = list(Relation.relation.keys())[0]
-            e = Relation.relation.get(r)
+            r = list(Relation.keys())[0]
+            e = Relation.get(r)
             print(r, e)
             GIC.GenerateItemChains(EntityInfo.endPointEntity, r, e, 1, LLICs, List_EntityInfo)
 
-    # LLICs = [LLICs[14], LLICs[22], LLICs[30]]
-
     ItemChains = LLICs.copy()
+    AllCandidate.append(list())
+    AllCandidate.append(ItemChains)
 
     for I in ItemChains:
         print(I.ChainId, I.Entities_Var, I.Relations_Parameter, I.EndpointEntity, I.Support)
 
-    AllLICs = LLICs = G2LIC.Generate2LargeItemChains(LLICs)
+    LLICs = G2LIC.Generate2LargeItemChains(LLICs)
+    AllCandidate.append(LLICs.copy())
 
     L = 0
     while L < len(LLICs):  # until len(Candidates) == 0
@@ -65,11 +66,10 @@ def MRAR():
         for CIS in Candidates:
             if len(CIS.LOE) / Config.TOTAL_VERTICES >= Config.MIN_SUPPORT:  # all subset of CIS are Large
                 LLICs.append(CIS)
-        AllLICs = AllLICs + LLICs
-        print(L, len(Candidates))
-        print(len(AllLICs))
+
+        AllCandidate.append(LLICs)
     print('done generate large')
-    Rules = GR.GenerateRule(AllLICs, ItemChains)
+    Rules = GR.GenerateRule(AllCandidate)
     return Rules
 
 

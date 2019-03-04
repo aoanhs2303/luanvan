@@ -18,10 +18,10 @@
 #
 
 
-d = {[1, 2]: ['apple1', 'apple2']}
+# d = {[1, 2]: ['apple1', 'apple2']}
 # d['a'] = d['a'] + ['apple3']
 # print(d['a'])
-print(d)
+# print(d)
 # print(list(d.keys())[0])  # displays all keys in list
 # print(d.values())  # displays you values in list
 # print(d.items())  # displays you pair tuple of key and value
@@ -54,8 +54,10 @@ print(d)
 #
 # print(list(thisset))
 
-# for i in range(3,4):
-#     print(i)
+arr = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+
+for i in range(2,len(arr)):
+    print(arr[i])
 
 
 # a = [1,2,3,4,5]

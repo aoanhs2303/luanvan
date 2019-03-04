@@ -10,13 +10,13 @@ def CombineAndSort(LOC1, LOC2, L):
     return LIC
 
 
-def Support(LOC, List_LargeItemChain, ItemChains):
+def Support(LOC, AllCandidate):
     if len(LOC) == 1:
-        for IC in ItemChains:
+        for IC in AllCandidate[1]:
             if LOC[0] == IC.ChainId:
-                return len(IC.Entities_Var) / Config.TOTAL_VERTICES
+                return IC.Support
     else:
-        for IC in List_LargeItemChain:
+        for IC in AllCandidate[len(LOC)]:
             if LOC == IC.List_Of_ChainIDs:
-                return len(IC.LOE) / Config.TOTAL_VERTICES
+                return IC.Support
     return 0
