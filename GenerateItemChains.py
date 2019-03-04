@@ -3,7 +3,7 @@ import DataStructure
 import ExampleMRAR as MRAR
 
 
-def GenerateItemChains(EndpointEntity, Relations_Parameter, Entities_Parameter, Level, LLICs, List_EntityInfo):
+def GenerateItemChains(EndpointEntity, Relations_Parameter, Entities_Parameter, Level, LLICs, Map_EntityInfo):
     Entities_Var = Entities_Parameter
     if Config.MIN_LEVEL <= Level <= Config.MAX_LEVEL:
         Support = len(Entities_Var) / Config.TOTAL_VERTICES
@@ -13,23 +13,22 @@ def GenerateItemChains(EndpointEntity, Relations_Parameter, Entities_Parameter, 
         LLICs.append(ItemChain)
 
     if Level < Config.MAX_LEVEL:
-        Relations_Var = UnionIncomingEdgesOf(Entities_Var, List_EntityInfo)
-        for Relation in Relations_Var: #đoạn này còn loáng choáng
+        Relations_Var = UnionIncomingEdgesOf(Entities_Var, Map_EntityInfo)
+        for Relation in Relations_Var:  # đoạn này còn loáng choáng
             r = list(Relation.keys())[0]
             e = Relation.get(r)
-            GenerateItemChains(EndpointEntity, Relations_Parameter + " " + r, e, Level + 1, LLICs, List_EntityInfo)
+            GenerateItemChains(EndpointEntity, Relations_Parameter + ">" + r, e, Level + 1, LLICs, Map_EntityInfo)
 
 
-def UnionIncomingEdgesOf(Entities_Var, List_EntityInfo):
+def UnionIncomingEdgesOf(Entities_Var, Map_EntityInfo):
     Relations_Var = []
-    for EntityInfo in List_EntityInfo:
-        for Entity in Entities_Var:
-            if Entity == EntityInfo.endPointEntity and len(EntityInfo.listRelationsAndEntities) > 0:
-                Relations_Var.append(EntityInfo.listRelationsAndEntities)
     Relations = set()
     Result = []
-    for r in Relations_Var:
-        Relations.add(list(r[0].keys())[0])
+    for Entity in Entities_Var:
+        ListRandE = Map_EntityInfo.get(Entity)
+        if len(ListRandE) > 0:
+            Relations_Var.append(ListRandE)
+            Relations.add(list(ListRandE[0].keys())[0])
 
     for r in Relations:
         Result.append({r: list()})

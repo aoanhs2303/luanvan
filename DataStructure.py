@@ -6,17 +6,6 @@ class Node:
         self.review = review
 
 
-class Review:
-    def __init__(self, rating, helpful):
-        self.rating = rating
-        self.helpful = helpful
-
-
-class RelationAndEntities:
-    def __init__(self, relation, listEntities):
-        self.relation = {relation: listEntities}
-
-
 class EntityInfo:
     def __init__(self, endPointEntity, listRelationsAndEntities):
         self.endPointEntity = endPointEntity
@@ -30,6 +19,7 @@ class ItemChain:
         self.Relations_Parameter = Relations_Parameter
         self.EndpointEntity = EndpointEntity
         self.Support = Support
+
 
 class LargeItemChain:
     def __init__(self, List_Of_ChainIDs, LOE, Support):
