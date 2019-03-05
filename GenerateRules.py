@@ -11,7 +11,7 @@ def GenerateRule(AllCandidate):
             for ChainID in Candidate.List_Of_ChainIDs:
                 Consequent = ChainID
                 Antecedent = sorted(list(set(Candidate.List_Of_ChainIDs) ^ set([ChainID])))
-                Confidence = Candidate.Support / Helper.Support(Antecedent, AllCandidate)
+                Confidence = Candidate.Support / Helper.Support(Antecedent, AllCandidate[1])
                 if Confidence >= Config.MIN_CONFIDENCE:
                     Rule = DataStructure.Rule(Antecedent, Consequent, Confidence, Candidate.Support)
                     Rules.append(Rule)

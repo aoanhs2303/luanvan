@@ -4,6 +4,7 @@ import GenerateItemChains as GIC
 import Generate2LargeItemChains as G2LIC
 import GenerateRules as GR
 import Helper
+import datetime
 
 
 # Config.setNumberOfVTOTAL_VERTICESertices(range(19))
@@ -55,7 +56,6 @@ def MRAR():
     for EntityInfo in List_EntityInfo:
         Map_EntityInfo[EntityInfo.endPointEntity] = EntityInfo.listRelationsAndEntities
 
-    global LLICs
     LLICs = []
     AllCandidate = []
 
@@ -69,15 +69,11 @@ def MRAR():
     AllCandidate.append(list())
     AllCandidate.append(ItemChains)
 
-    for I in ItemChains:
-        print(I.ChainId, I.Entities_Var, I.Relations_Parameter, I.EndpointEntity, I.Support)
-
     LLICs = G2LIC.Generate2LargeItemChains(LLICs)
     AllCandidate.append(LLICs.copy())
 
     L = 0
     while L < len(LLICs):  # until len(Candidates) == 0
-        print(L)
         L = L + 1
         Candidates = list()
         lengthOfArray = len(LLICs)
@@ -91,11 +87,16 @@ def MRAR():
                 LLICs.append(CIS)
 
         AllCandidate.append(LLICs)
-    print('done generate large')
+    currentDT = datetime.datetime.now()
+    print("candidate: " + str(currentDT))
     Rules = GR.GenerateRule(AllCandidate)
     return Rules
 
 
 if __name__ == '__main__':
+    currentDT = datetime.datetime.now()
+    print("start: " + str(currentDT))
     MRAR()
+    currentDT = datetime.datetime.now()
+    print("end: " + str(currentDT))
     print('done')
