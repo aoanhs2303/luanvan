@@ -98,8 +98,20 @@
 # temp.add(b)
 # print(temp)
 
-x = set()
-x.add(1)
-x.add(2)
-print(x, len(x))
+# x = set()
+# x.add(1)
+# x.add(2)
+# print(x, len(x))
 
+print('*'*3)
+
+# str = "a>b>c"
+# arr = str.split(">")[-1];
+# print(arr)
+
+x = {"Xx": 10}
+print(x == True)
+if x:
+    print(100)
+else:
+    print(10)

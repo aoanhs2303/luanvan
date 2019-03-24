@@ -1,6 +1,5 @@
 import Config
 import DataStructure
-import ExampleMRAR as MRAR
 
 
 def GenerateItemChains(EndpointEntity, Relations_Parameter, Entities_Parameter, Level, LLICs, Map_EntityInfo):
@@ -14,7 +13,7 @@ def GenerateItemChains(EndpointEntity, Relations_Parameter, Entities_Parameter, 
 
     if Level < Config.MAX_LEVEL:
         Relations_Var = UnionIncomingEdgesOf(Entities_Var, Map_EntityInfo)
-        for Relation in Relations_Var:  # đoạn này còn loáng choáng
+        for Relation in Relations_Var:
             r = list(Relation.keys())[0]
             e = Relation.get(r)
             GenerateItemChains(EndpointEntity, Relations_Parameter + ">" + r, e, Level + 1, LLICs, Map_EntityInfo)
@@ -26,7 +25,12 @@ def UnionIncomingEdgesOf(Entities_Var, Map_EntityInfo):
     Result = []
     for Entity in Entities_Var:
         ListRandE = Map_EntityInfo.get(Entity)
-        if len(ListRandE) > 0:
+        try:
+            lenOfLE = len(ListRandE)
+        except:
+            lenOfLE = 0
+
+        if lenOfLE > 0:
             Relations_Var.append(ListRandE)
             Relations.add(list(ListRandE[0].keys())[0])
 

@@ -1,0 +1,16 @@
+(city(Richmond)) --> (gender(f)), {C=0.00904581266413773}
+(gender(f)) --> (city(Richmond)), {C=0.00904581266413773}
+(marital status(M)) --> (gender(f)), {C=0.2504620173134909}
+(gender(f)) --> (marital status(M)), {C=0.2504620173134909}
+(marital status(S)) --> (gender(f)), {C=0.2453068767629608}
+(gender(f)) --> (marital status(S)), {C=0.2453068767629608}
+(city(Richmond)) --> (gender(m)), {C=0.009532146678338684}
+(gender(m)) --> (city(Richmond)), {C=0.009532146678338684}
+(marital status(M)) --> (gender(m)), {C=0.24968388289076937}
+(gender(m)) --> (marital status(M)), {C=0.24968388289076937}
+(marital status(S)) --> (gender(m)), {C=0.25454722303277894}
+(gender(m)) --> (marital status(S)), {C=0.25454722303277894}
+(marital status(M)) --> (city(Richmond)), {C=0.009823947086859255}
+(city(Richmond)) --> (marital status(M)), {C=0.009823947086859255}
+(marital status(S)) --> (city(Richmond)), {C=0.008754012255617158}
+(city(Richmond)) --> (marital status(S)), {C=0.008754012255617158}

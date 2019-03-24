@@ -5,31 +5,10 @@ import Generate2LargeItemChains as G2LIC
 import GenerateRules as GR
 import Helper
 import datetime
+import pymysql.cursors
 
-
-# Config.setNumberOfVTOTAL_VERTICESertices(range(19))
 
 def MRAR():
-    # EI01 = DS.EntityInfo("Humid", [{"Climate Type": ["Tehran", "Shiraz"]}])
-    # EI02 = DS.EntityInfo("Tehran", [{"Nearby": ["Yazd"]}])
-    # EI03 = DS.EntityInfo("Shiraz", [{"Nearby": ["Kerman"]}, {"Live in": ["Mr A"]}])
-    # EI04 = DS.EntityInfo("Yazd", [{"Live in": ["Hasan"]}])
-    # EI05 = DS.EntityInfo("Kerman", [{"Live in": ["Reza", "Saraee"]}])
-    # EI06 = DS.EntityInfo("Hasan", [])
-    # EI07 = DS.EntityInfo("Reza", [])
-    # EI08 = DS.EntityInfo("Good", [{"Health Condition": ["Hasan", "Reza"]}])
-    # EI09 = DS.EntityInfo("Project A", [{"Work On": ["Mr A"]}])
-    # EI10 = DS.EntityInfo("Mr A", [{"Cooperator": ["Saraee"]}])
-    # EI11 = DS.EntityInfo("Saraee", [{"Supervised By": ["Reza", "Ali"]}])
-    # EI12 = DS.EntityInfo("Ali", [])
-    # EI13 = DS.EntityInfo("IUT", [{"Study in": ["Reza", "Ali", "Ahmad"]}, {"Patronage": ["Project B"]}])
-    # EI14 = DS.EntityInfo("Project B", [{"Work On": ["Mr B"]}])
-    # EI15 = DS.EntityInfo("Nematbakhsh", [{"Supervised By": ["Ahmad"]}])
-    # EI16 = DS.EntityInfo("Ahmad", [])
-    # EI17 = DS.EntityInfo("Isfahan", [{"Live in": ["Ali", "Ahmad", "Nematbakhsh"]}])
-    # EI18 = DS.EntityInfo("MIT", [{"Patronage": ["Project A", "Project B"]}])
-    # EI19 = DS.EntityInfo("Mr B", [{"Cooperator": ["Nematbakhsh"]}])
-
     EI01 = DS.EntityInfo("Humid", [{"Climate Type": ["Tehran", "Shiraz"]}])
     EI02 = DS.EntityInfo("Tehran", [{"Nearby": ["Yazd"]}])
     EI03 = DS.EntityInfo("Shiraz", [{"Nearby": ["Kerman"]}])
@@ -90,6 +69,7 @@ def MRAR():
     currentDT = datetime.datetime.now()
     print("candidate: " + str(currentDT))
     Rules = GR.GenerateRule(AllCandidate)
+    Helper.writeRule2File(Rules, ItemChains)
     return Rules
 
 
